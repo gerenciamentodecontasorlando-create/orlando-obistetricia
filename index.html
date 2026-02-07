@@ -3,193 +3,218 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Obstetrícia — Livro Rápido (Pré-natal • Parto • Puerpério • Emergências)</title>
-  <meta name="description" content="Livro de Obstetrícia em HTML: pré-natal, rastreios, ultrassons, parto, puerpério, emergências e medicamentos para estudantes de medicina." />
+  <title>OrlandoBook — Obstetrícia (MS + FEBRASGO)</title>
+  <meta name="description" content="OrlandoBook: Obstetrícia para estudantes de medicina — baseado em documentos do Ministério da Saúde e FEBRASGO. Pré-natal, parto, puerpério, urgências e fármacos." />
+
   <style>
     :root{
-      --bg:#0b1220;
-      --card:#0f1a2e;
-      --card2:#0d1728;
-      --ink:#eaf1ff;
-      --muted:#a9b7d0;
-      --line:rgba(255,255,255,.10);
-      --accent:#4aa3ff;
-      --accent2:#7c5cff;
-      --ok:#25d366;
-      --warn:#ffcc00;
-      --bad:#ff5c7a;
+      --bg:#f6f8fc;
+      --paper:#ffffff;
+      --ink:#0f172a;
+      --muted:#475569;
+      --line:#e6eaf3;
+
+      --accent:#2563eb;   /* azul tech */
+      --accent2:#7c3aed;  /* roxo tech */
+      --ok:#16a34a;
+      --warn:#d97706;
+      --bad:#dc2626;
+
+      --shadow: 0 18px 45px rgba(15,23,42,.10);
+      --shadow2: 0 10px 28px rgba(37,99,235,.10);
+      --r:18px;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
       --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      --sans: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
-      --shadow: 0 18px 40px rgba(0,0,0,.35);
-      --radius: 18px;
     }
+
     *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
     body{
       margin:0;
       font-family: var(--sans);
-      background: radial-gradient(1200px 600px at 10% 5%, rgba(74,163,255,.20), transparent 60%),
-                  radial-gradient(1000px 700px at 90% 10%, rgba(124,92,255,.18), transparent 55%),
-                  radial-gradient(900px 600px at 55% 95%, rgba(37,211,102,.10), transparent 55%),
-                  var(--bg);
-      color:var(--ink);
+      color: var(--ink);
+      background:
+        radial-gradient(1000px 600px at 12% 6%, rgba(37,99,235,.12), transparent 60%),
+        radial-gradient(900px 600px at 88% 8%, rgba(124,58,237,.10), transparent 55%),
+        radial-gradient(900px 650px at 55% 96%, rgba(22,163,74,.08), transparent 60%),
+        var(--bg);
       line-height:1.55;
     }
+
     a{color:var(--accent); text-decoration:none}
     a:hover{text-decoration:underline}
+    code, .mono{font-family:var(--mono)}
+    .wrap{max-width:1180px; margin:0 auto; padding:18px 16px}
+
+    /* TOP BAR */
     header{
       position:sticky; top:0; z-index:50;
-      background: rgba(11,18,32,.72);
+      background: rgba(246,248,252,.82);
       backdrop-filter: blur(10px);
       border-bottom:1px solid var(--line);
     }
-    .wrap{max-width:1100px; margin:0 auto; padding:18px 16px}
     .topbar{
-      display:flex; align-items:center; gap:12px; flex-wrap:wrap;
-      justify-content:space-between;
+      display:flex; align-items:center; justify-content:space-between;
+      gap:12px; flex-wrap:wrap;
     }
     .brand{
       display:flex; align-items:center; gap:12px;
+      min-width: 260px;
     }
     .logo{
-      width:40px; height:40px; border-radius:14px;
-      background: linear-gradient(135deg, rgba(74,163,255,.95), rgba(124,92,255,.90));
-      box-shadow: 0 14px 32px rgba(74,163,255,.16);
+      width:44px; height:44px; border-radius:16px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      box-shadow: var(--shadow2);
       position:relative; overflow:hidden;
     }
-    .logo:after{
+    .logo::after{
       content:"";
       position:absolute; inset:-40%;
-      background: radial-gradient(circle at 40% 40%, rgba(255,255,255,.35), transparent 55%);
+      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.45), transparent 55%);
       transform: rotate(25deg);
     }
-    .titleblock h1{
-      font-size:18px; margin:0;
+    .brand h1{
+      margin:0;
+      font-size:16px;
       letter-spacing:.2px;
+      line-height:1.2;
     }
-    .titleblock p{
-      margin:2px 0 0; color:var(--muted); font-size:12px
+    .brand p{
+      margin:2px 0 0;
+      font-size:12px;
+      color: var(--muted);
     }
-    .tools{
-      display:flex; gap:10px; flex-wrap:wrap; align-items:center;
-    }
+
+    .tools{display:flex; gap:10px; flex-wrap:wrap; align-items:center}
     .search{
       display:flex; align-items:center; gap:8px;
-      background: rgba(255,255,255,.06);
+      padding:10px 12px;
       border:1px solid var(--line);
-      border-radius: 999px;
-      padding: 10px 12px;
-      min-width: 240px;
+      border-radius:999px;
+      background: rgba(255,255,255,.75);
+      min-width: 260px;
+      box-shadow: 0 8px 20px rgba(15,23,42,.06);
     }
     .search input{
       width:100%;
-      background:transparent;
       border:0;
       outline:none;
-      color:var(--ink);
+      background:transparent;
       font-size:14px;
+      color:var(--ink);
     }
     .btn{
       border:1px solid var(--line);
-      background: rgba(255,255,255,.06);
-      color:var(--ink);
+      background: rgba(255,255,255,.78);
+      color: var(--ink);
       padding:10px 12px;
-      border-radius: 999px;
+      border-radius:999px;
       cursor:pointer;
-      font-weight:600;
+      font-weight:700;
       font-size:13px;
-      transition:.15s ease;
+      transition:.14s ease;
+      box-shadow: 0 8px 20px rgba(15,23,42,.06);
       user-select:none;
     }
-    .btn:hover{transform: translateY(-1px); border-color: rgba(74,163,255,.45)}
+    .btn:hover{transform: translateY(-1px); border-color: rgba(37,99,235,.35)}
     .btn.primary{
-      background: linear-gradient(135deg, rgba(74,163,255,.95), rgba(124,92,255,.90));
       border:0;
-      box-shadow: 0 16px 32px rgba(124,92,255,.16);
+      color:#fff;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      box-shadow: var(--shadow2);
     }
 
+    /* HERO */
     .hero{
-      padding: 22px 16px 0;
+      padding: 10px 0 0;
     }
-    .hero .wrap{
+    .heroGrid{
       display:grid;
-      grid-template-columns: 1.3fr .7fr;
+      grid-template-columns: 1.2fr .8fr;
       gap:16px;
     }
     .card{
-      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      background: rgba(255,255,255,.86);
       border:1px solid var(--line);
-      border-radius: var(--radius);
+      border-radius: var(--r);
       box-shadow: var(--shadow);
-      padding:16px;
+      padding: 16px;
     }
     .card h2{margin:0 0 6px; font-size:18px}
     .card p{margin:0; color:var(--muted)}
     .chips{display:flex; flex-wrap:wrap; gap:8px; margin-top:12px}
     .chip{
-      font-size:12px; color:var(--ink);
-      padding:7px 10px; border-radius:999px;
+      font-size:12px;
+      padding:7px 10px;
+      border-radius:999px;
       border:1px solid var(--line);
-      background: rgba(0,0,0,.12);
+      background: rgba(37,99,235,.06);
+      color: var(--ink);
     }
 
-    main{padding: 14px 16px 40px}
+    /* LAYOUT */
+    main{padding: 12px 0 40px}
     .layout{
-      max-width:1100px; margin:0 auto;
-      display:grid; grid-template-columns: 320px 1fr;
-      gap:16px;
+      display:grid;
+      grid-template-columns: 340px 1fr;
+      gap: 16px;
       align-items:start;
     }
-    nav{
-      position: sticky; top: 88px;
-    }
+    nav{position:sticky; top: 92px}
     .navcard{
-      background: rgba(255,255,255,.05);
+      background: rgba(255,255,255,.86);
       border:1px solid var(--line);
-      border-radius: var(--radius);
+      border-radius: var(--r);
+      box-shadow: var(--shadow);
       padding: 14px;
     }
     .navcard h3{
       margin:0 0 10px;
-      font-size:14px; color:var(--muted);
-      letter-spacing:.4px;
+      font-size:12px;
+      color: var(--muted);
+      letter-spacing:.5px;
       text-transform:uppercase;
     }
     .toc a{
       display:block;
-      padding:9px 10px;
-      border-radius:12px;
-      color:var(--ink);
+      padding:10px 10px;
+      border-radius:14px;
       border:1px solid transparent;
       margin:6px 0;
-      background: rgba(0,0,0,.10);
+      background: rgba(15,23,42,.03);
+      color: var(--ink);
     }
     .toc a:hover{
-      border-color: rgba(74,163,255,.35);
-      background: rgba(74,163,255,.10);
+      border-color: rgba(37,99,235,.25);
+      background: rgba(37,99,235,.08);
       text-decoration:none;
     }
-    .toc small{display:block; color:var(--muted); font-size:12px; margin-top:2px}
+    .toc small{
+      display:block;
+      font-size:12px;
+      color: var(--muted);
+      margin-top:2px;
+    }
 
     section{
       scroll-margin-top: 110px;
-      background: rgba(255,255,255,.04);
+      background: rgba(255,255,255,.86);
       border:1px solid var(--line);
-      border-radius: var(--radius);
+      border-radius: var(--r);
+      box-shadow: var(--shadow);
       padding: 16px;
       margin-bottom: 14px;
     }
-    section h2{
-      margin:0 0 6px;
-      font-size:18px;
-    }
-    .sub{color:var(--muted); margin:0 0 12px}
+    section h2{margin:0 0 6px; font-size:18px}
+    .sub{margin:0 0 12px; color:var(--muted)}
+
     .grid2{
       display:grid;
       grid-template-columns: 1fr 1fr;
       gap:12px;
     }
     .box{
-      background: rgba(0,0,0,.14);
+      background: rgba(15,23,42,.03);
       border:1px solid var(--line);
       border-radius: 16px;
       padding: 12px;
@@ -197,80 +222,84 @@
     .box h4{margin:0 0 8px; font-size:14px}
     ul{margin:8px 0 0 18px}
     li{margin:6px 0}
+
     .table{
       width:100%;
-      border-collapse: separate;
-      border-spacing: 0;
-      overflow:hidden;
-      border-radius: 14px;
+      border-collapse:separate;
+      border-spacing:0;
       border:1px solid var(--line);
+      border-radius: 14px;
+      overflow:hidden;
       margin-top:10px;
+      background: #fff;
     }
-    .table th,.table td{
+    .table th, .table td{
       padding:10px 10px;
       border-bottom:1px solid var(--line);
       vertical-align:top;
-      font-size: 13px;
+      font-size:13px;
     }
     .table th{
-      color:var(--muted);
-      text-transform:uppercase;
       font-size:11px;
-      letter-spacing:.4px;
-      background: rgba(0,0,0,.18);
+      text-transform:uppercase;
+      letter-spacing:.45px;
+      color: var(--muted);
+      background: rgba(15,23,42,.03);
     }
     .table tr:last-child td{border-bottom:0}
+
     .tag{
       display:inline-block;
       padding:4px 8px;
       border-radius:999px;
+      border:1px solid var(--line);
       font-size:12px;
-      border:1px solid var(--line);
-      background: rgba(255,255,255,.06);
-      color: var(--ink);
+      background: #fff;
     }
-    .ok{border-color: rgba(37,211,102,.35); background: rgba(37,211,102,.12)}
-    .warn{border-color: rgba(255,204,0,.35); background: rgba(255,204,0,.12)}
-    .bad{border-color: rgba(255,92,122,.35); background: rgba(255,92,122,.12)}
-    .mono{font-family: var(--mono)}
+    .ok{border-color: rgba(22,163,74,.28); background: rgba(22,163,74,.08)}
+    .warn{border-color: rgba(217,119,6,.28); background: rgba(217,119,6,.10)}
+    .bad{border-color: rgba(220,38,38,.28); background: rgba(220,38,38,.10)}
+
     .callout{
+      margin-top:10px;
       border-radius: 16px;
-      border:1px solid var(--line);
-      padding: 12px;
-      margin-top: 10px;
-      background: rgba(0,0,0,.12);
+      border:1px solid rgba(37,99,235,.22);
+      background: linear-gradient(180deg, rgba(37,99,235,.10), rgba(124,58,237,.06));
+      padding:12px;
     }
     .callout strong{display:block; margin-bottom:6px}
     details{
+      margin-top:10px;
       border:1px solid var(--line);
       border-radius: 16px;
       padding: 10px 12px;
-      background: rgba(0,0,0,.10);
-      margin-top: 10px;
+      background: rgba(15,23,42,.03);
     }
-    summary{cursor:pointer; font-weight:700}
-    .muted{color:var(--muted)}
-    .foot{
-      color:var(--muted);
-      font-size:12px;
-      margin-top:10px;
+    summary{cursor:pointer; font-weight:800}
+    .foot{color: var(--muted); font-size:12px; margin-top:10px}
+
+    /* MARK highlight */
+    mark[data-hl="1"]{
+      background: rgba(37,99,235,.18);
+      border: 1px solid rgba(37,99,235,.25);
+      border-radius: 8px;
+      padding: 0 3px;
     }
 
-    .kbd{
-      font-family: var(--mono);
-      font-size:12px;
-      padding:2px 6px;
-      border-radius:8px;
-      border:1px solid var(--line);
-      background: rgba(0,0,0,.18);
-      color: var(--ink);
+    /* PRINT */
+    @media print{
+      header, nav, .tools{display:none !important}
+      body{background:#fff}
+      section, .card, .navcard{box-shadow:none !important}
+      .layout{grid-template-columns: 1fr}
+      a{color:#000; text-decoration:underline}
     }
 
     @media (max-width: 980px){
-      .hero .wrap{grid-template-columns:1fr}
+      .heroGrid{grid-template-columns:1fr}
       .layout{grid-template-columns:1fr}
       nav{position:relative; top:auto}
-      .search{min-width: 180px}
+      .search{min-width: 200px}
     }
   </style>
 </head>
@@ -281,742 +310,672 @@
     <div class="topbar">
       <div class="brand">
         <div class="logo" aria-hidden="true"></div>
-        <div class="titleblock">
-          <h1>Obstetrícia — Livro Rápido</h1>
-          <p>Pré-natal • Parto • Puerpério • Emergências • Medicamentos (para estudantes de medicina)</p>
+        <div>
+          <h1>OrlandoBook — Obstetrícia (MS + FEBRASGO)</h1>
+          <p>Pré-natal • Parto • Puerpério • Urgências • Medicamentos • Checklists</p>
         </div>
       </div>
 
       <div class="tools">
         <div class="search" title="Pesquisar no texto">
-          🔎 <input id="q" placeholder="Pesquisar (ex: Rh, eclâmpsia, ocitocina, GBS)..." />
+          🔎 <input id="q" placeholder="Pesquisar (ex: pré-eclâmpsia, Rh, GBS, HPP, ocitocina)..." />
         </div>
-        <button class="btn" id="btnClear" title="Limpar pesquisa">Limpar</button>
-        <button class="btn primary" onclick="window.print()" title="Imprimir / salvar em PDF">Imprimir/PDF</button>
+        <button class="btn" id="btnClear">Limpar</button>
+        <button class="btn primary" onclick="window.print()">Imprimir / PDF</button>
       </div>
     </div>
   </div>
 </header>
 
-<section class="hero">
+<div class="hero">
   <div class="wrap">
-    <div class="card">
-      <h2>Como usar isso aqui (jeito esperto)</h2>
-      <p>Isso é um <b>livro em HTML</b>: índice à esquerda, capítulos à direita. Use a pesquisa pra achar qualquer tema em segundos.
-        E se quiser, dá pra imprimir e virar PDF.</p>
-      <div class="chips">
-        <span class="chip">✅ Conteúdo prático + prova</span>
-        <span class="chip">🧠 “Armadilhas” e “pérolas”</span>
-        <span class="chip">💊 Doses mais comuns</span>
-        <span class="chip">🧾 Checklists de consulta</span>
+    <div class="heroGrid">
+      <div class="card">
+        <h2>Livro rápido, mas com fonte “de peso”</h2>
+        <p>
+          Esse OrlandoBook foi montado com base em <b>documentos do Ministério da Saúde</b> e <b>FEBRASGO</b>.
+          A ideia é: conteúdo limpo, organizado, com checklists e “armadilhas de prova”.
+        </p>
+        <div class="chips">
+          <span class="chip">📚 MS (BVSMS + gov.br)</span>
+          <span class="chip">🏥 FEBRASGO (Position Statements)</span>
+          <span class="chip">🧠 Clínica + prova</span>
+          <span class="chip">🧾 Checklists e tabelas</span>
+        </div>
+        <div class="foot">
+          ⚠️ Importante: doses/fluxos podem variar por protocolo local. Em urgência, manda o protocolo do teu serviço.
+        </div>
       </div>
-      <div class="foot">⚠️ Nota: condutas podem variar por Ministério/ACOG/OMS e protocolo do serviço. Em urgência, sempre siga o protocolo local.</div>
-    </div>
 
-    <div class="card">
-      <h2>Mapa mental (macro)</h2>
-      <div class="box">
-        <h4>Gestação</h4>
-        <ul>
-          <li>Confirmação + datação</li>
-          <li>Rastreios do 1º e 2º trimestre</li>
-          <li>Pré-natal de risco habitual vs. alto risco</li>
-          <li>Intercorrências (HAS, DMG, infecções)</li>
-        </ul>
-      </div>
-      <div class="box" style="margin-top:10px">
-        <h4>Parto e pós-parto</h4>
-        <ul>
-          <li>Trabalho de parto + analgesia + assistência</li>
-          <li>Distócias e emergências</li>
-          <li>Hemorragia pós-parto</li>
-          <li>Puerpério + amamentação + planejamento reprodutivo</li>
-        </ul>
+      <div class="card">
+        <h2>Como estudar aqui dentro</h2>
+        <div class="box">
+          <h4>Truque de mestre</h4>
+          <ul>
+            <li>Use a busca: <span class="mono">HPP</span>, <span class="mono">Rh</span>, <span class="mono">GBS</span>, <span class="mono">HELLP</span>…</li>
+            <li>Leia “checklists” antes de prova/plantão</li>
+            <li>Depois imprime em PDF e vira tua apostila</li>
+          </ul>
+        </div>
+        <div class="box" style="margin-top:10px">
+          <h4>Camadas</h4>
+          <ul>
+            <li><b>Risco habitual</b> (APS) → rotina e rastreio</li>
+            <li><b>Alto risco</b> → critérios, encaminhamento e urgências</li>
+            <li><b>Parto normal</b> → boas práticas centradas na mulher</li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
-</section>
+</div>
 
 <main>
-  <div class="layout">
-    <nav>
-      <div class="navcard">
-        <h3>Índice</h3>
-        <div class="toc" id="toc">
-          <a href="#cap1">1) Fundamentos e datas
-            <small>IG, DPP, consultas, sinais de alarme</small>
-          </a>
-          <a href="#cap2">2) Primeira consulta do pré-natal
-            <small>história, exame, exames iniciais, risco</small>
-          </a>
-          <a href="#cap3">3) Suplementação e vacinas
-            <small>ferro, ácido fólico, vitamina D, imunizações</small>
-          </a>
-          <a href="#cap4">4) Rastreamentos e ultrassons por trimestre
-            <small>USG, morfológico, diabetes, GBS</small>
-          </a>
-          <a href="#cap5">5) Doenças hipertensivas da gestação
-            <small>pré-eclâmpsia, eclâmpsia, HELLP</small>
-          </a>
-          <a href="#cap6">6) Diabetes na gestação
-            <small>DMG, metas glicêmicas, insulina</small>
-          </a>
-          <a href="#cap7">7) Infecções na gestação (TORCH/STORCH, ITU)
-            <small>sífilis, HIV, hepatites, toxo, rubéola etc.</small>
-          </a>
-          <a href="#cap8">8) Rh e isoimunização
-            <small>Coombs indireto, anti-D, conduta</small>
-          </a>
-          <a href="#cap9">9) Trabalho de parto e parto
-            <small>fases, partograma, analgesia, assistência</small>
-          </a>
-          <a href="#cap10">10) Indução, ocitocina e misoprostol
-            <small>esquemas usuais, cuidado e monitorização</small>
-          </a>
-          <a href="#cap11">11) Distócias e emergências intraparto
-            <small>ombro, prolapso, sofrimento fetal</small>
-          </a>
-          <a href="#cap12">12) Hemorragia pós-parto
-            <small>4 T’s, uterotônicos, passos</small>
-          </a>
-          <a href="#cap13">13) Puerpério, amamentação e anticoncepção
-            <small>cuidados, mastite, métodos</small>
-          </a>
-          <a href="#cap14">14) Medicamentos na gestação
-            <small>o que pode, o que evitar, analgesia, ATB</small>
-          </a>
-          <a href="#cap15">15) Checklist “prova e plantão”
-            <small>atalhos, valores-chave, armadilhas</small>
-          </a>
+  <div class="wrap">
+    <div class="layout">
+      <nav>
+        <div class="navcard">
+          <h3>Índice</h3>
+          <div class="toc">
+            <a href="#cap1">1) Datas, IG e DPP <small>datação, sinais de alarme</small></a>
+            <a href="#cap2">2) Primeira consulta do pré-natal <small>roteiro completo + exames</small></a>
+            <a href="#cap3">3) Suplementação e vacinas <small>lógica MS, o que evitar</small></a>
+            <a href="#cap4">4) Rastreios por trimestre <small>USG, DMG, GBS, vigilância</small></a>
+            <a href="#cap5">5) DHG (pré-eclâmpsia/HELLP) <small>gravidade e conduta macro</small></a>
+            <a href="#cap6">6) Diabetes na gestação <small>DMG, metas, acompanhamento</small></a>
+            <a href="#cap7">7) Infecções (TORCH/IST/ITU) <small>o que mais cai</small></a>
+            <a href="#cap8">8) Rh e isoimunização <small>Coombs, anti-D (conceito)</small></a>
+            <a href="#cap9">9) Trabalho de parto e parto normal <small>boas práticas MS</small></a>
+            <a href="#cap10">10) Indução e uterotônicos <small>conceito + segurança</small></a>
+            <a href="#cap11">11) Emergências intraparto <small>distócias, prolapso, SF</small></a>
+            <a href="#cap12">12) Hemorragia pós-parto (HPP) <small>4T’s + passos (FEBRASGO)</small></a>
+            <a href="#cap13">13) Puerpério e amamentação <small>rastreamentos e red flags</small></a>
+            <a href="#cap14">14) Medicamentos na gestação <small>pode/evitar (macro)</small></a>
+            <a href="#cap15">15) Checklist prova/plantão <small>top 10 + atalhos</small></a>
+            <a href="#fontes">Fontes (MS + FEBRASGO) <small>links oficiais</small></a>
+          </div>
         </div>
+      </nav>
+
+      <div>
+        <!-- CAP 1 -->
+        <section id="cap1">
+          <h2>1) Datas, IG e DPP</h2>
+          <p class="sub">O básico que destrava tudo: datação correta, DPP e sinais de alerta.</p>
+
+          <div class="grid2">
+            <div class="box">
+              <h4>Datação e DPP</h4>
+              <ul>
+                <li><b>USG do 1º trimestre</b> (quando disponível) é a melhor para datação.</li>
+                <li><b>Regra de Naegele:</b> DUM + 7 dias − 3 meses (+ 1 ano).</li>
+                <li>Se DUM incerta/ciclos irregulares → priorize datação por USG precoce.</li>
+              </ul>
+              <div class="callout">
+                <strong>Armadilha de prova</strong>
+                DUM “bonitinha” pode enganar. Prova adora ciclo irregular + sangramento confundindo.
+              </div>
+            </div>
+
+            <div class="box">
+              <h4>Sinais de alarme (sempre perguntar)</h4>
+              <ul>
+                <li><span class="tag bad">Sangramento</span> vaginal importante</li>
+                <li><span class="tag bad">Dor</span> abdominal intensa/contínua</li>
+                <li><span class="tag bad">Cefaleia + escotomas</span> (pensa DHG)</li>
+                <li><span class="tag warn">Febre</span> / disúria / dor lombar</li>
+                <li><span class="tag warn">↓ movimentos fetais</span></li>
+                <li><span class="tag warn">Perda de líquido</span> (rotura de membranas)</li>
+              </ul>
+            </div>
+          </div>
+
+          <details>
+            <summary>Rotina de consultas (macro — MS/APS)</summary>
+            <div class="foot">
+              A lógica MS na APS é captação precoce, acompanhamento regular, rastreio de riscos e educação em saúde.
+              Número mínimo costuma ser citado como referência em materiais do MS (e guias estaduais que seguem MS).
+            </div>
+          </details>
+        </section>
+
+        <!-- CAP 2 -->
+        <section id="cap2">
+          <h2>2) Primeira consulta do pré-natal</h2>
+          <p class="sub">Consulta “mãe”: define risco, plano e solicita os exames que mudam desfecho.</p>
+
+          <div class="grid2">
+            <div class="box">
+              <h4>Anamnese que vale ponto</h4>
+              <ul>
+                <li>Gesta/para/aborto; complicações prévias (PE, prematuridade, HPP)</li>
+                <li>Comorbidades: HAS, DM, renal, autoimune, trombofilias</li>
+                <li>Medicamentos (teratógenos!), alergias, uso de drogas</li>
+                <li>Social: suporte, violência, trabalho, alimentação, moradia</li>
+              </ul>
+            </div>
+
+            <div class="box">
+              <h4>Exame físico essencial</h4>
+              <ul>
+                <li><b>PA</b> com técnica correta + peso/IMC</li>
+                <li>Edema, sinais de anemia, tireoide</li>
+                <li>Abdome, mamas; ginecológico se indicado</li>
+                <li>Altura uterina/BCF quando aplicável</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="box" style="margin-top:12px">
+            <h4>Exames iniciais (pacote “clássico” de APS)</h4>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Grupo</th>
+                  <th>Exames</th>
+                  <th>Objetivo</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><span class="tag ok">Sangue</span></td>
+                  <td>Hemograma; ABO/Rh; Coombs indireto (se Rh−); glicemia/triagem metabólica conforme protocolo</td>
+                  <td>anemia, isoimunização, risco metabólico</td>
+                </tr>
+                <tr>
+                  <td><span class="tag ok">Urina</span></td>
+                  <td>EAS + urocultura (especialmente início)</td>
+                  <td>bacteriúria assintomática/ITU</td>
+                </tr>
+                <tr>
+                  <td><span class="tag ok">Infecções</span></td>
+                  <td>Sífilis, HIV, hepatite B (± C), outras conforme protocolo local</td>
+                  <td>reduzir transmissão vertical</td>
+                </tr>
+                <tr>
+                  <td><span class="tag ok">Imagem</span></td>
+                  <td>USG 1º tri (quando disponível)</td>
+                  <td>datação/viabilidade</td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="callout">
+              <strong>Checklist que eu gosto</strong>
+              Primeira consulta boa = <b>IG fechada</b> + <b>risco classificado</b> + <b>exames pedidos</b> + <b>plano escrito</b>.
+            </div>
+          </div>
+        </section>
+
+        <!-- CAP 3 -->
+        <section id="cap3">
+          <h2>3) Suplementação e vacinas</h2>
+          <p class="sub">Prevenção barata, impacto gigante: anemia, defeito do tubo neural, infecções evitáveis.</p>
+
+          <div class="grid2">
+            <div class="box">
+              <h4>Suplementação (macro)</h4>
+              <ul>
+                <li><b>Ácido fólico:</b> ideal começar antes e manter no 1º trimestre (dose conforme risco).</li>
+                <li><b>Ferro:</b> profilaxia/tratamento conforme Hb e avaliação clínica; GI é o “vilão”.</li>
+                <li><b>Cálcio / Vitamina D:</b> considerar conforme risco/deficiência e protocolo.</li>
+              </ul>
+              <div class="foot">Doses fechadas variam por diretriz local — eu mantenho o OrlandoBook “seguro” e alinhável.</div>
+            </div>
+
+            <div class="box">
+              <h4>Vacinas (regra de ouro)</h4>
+              <ul>
+                <li><b>Inativadas</b> → em geral podem (ex.: influenza, dT/dTpa, hepatite B conforme status).</li>
+                <li><b>Vivas atenuadas</b> → em geral evitar na gestação (ex.: tríplice viral, varicela).</li>
+                <li><b>Pós-parto</b> → janela ótima pra atualizar o que faltou.</li>
+              </ul>
+              <div class="callout">
+                <strong>Prova:</strong> se é vacina viva → “evita na gestação”, salvo orientação expressa do protocolo.
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- CAP 4 -->
+        <section id="cap4">
+          <h2>4) Rastreios por trimestre (calendário que organiza tua mente)</h2>
+          <p class="sub">Datação, morfológico, DMG, GBS e vigilância no final — o “timing” é o segredo.</p>
+
+          <div class="box">
+            <h4>Janelas comuns</h4>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Janela</th>
+                  <th>O que buscar</th>
+                  <th>Exemplos</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><b>1º trimestre</b></td>
+                  <td>viabilidade + datação</td>
+                  <td>USG precoce, rastreios iniciais</td>
+                </tr>
+                <tr>
+                  <td><b>2º trimestre</b></td>
+                  <td>malformações + crescimento</td>
+                  <td>USG morfológico; avaliação do colo se indicado</td>
+                </tr>
+                <tr>
+                  <td><b>meio da gestação</b></td>
+                  <td>metabólico</td>
+                  <td>rastreamento de DMG conforme protocolo</td>
+                </tr>
+                <tr>
+                  <td><b>final</b></td>
+                  <td>planejamento do parto</td>
+                  <td>GBS em muitos protocolos; vigilância materna e fetal</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- CAP 5 -->
+        <section id="cap5">
+          <h2>5) Doenças hipertensivas da gestação (DHG)</h2>
+          <p class="sub">Tema campeão: reconhecer gravidade rápido e não subestimar sintomas neurológicos.</p>
+
+          <div class="grid2">
+            <div class="box">
+              <h4>Conceitos (macro)</h4>
+              <ul>
+                <li><b>HAS gestacional:</b> após 20s sem critérios de pré-eclâmpsia.</li>
+                <li><b>Pré-eclâmpsia:</b> HAS após 20s + disfunção orgânica e/ou proteinúria (critérios por diretriz).</li>
+                <li><b>Eclâmpsia:</b> convulsão no contexto de PE.</li>
+                <li><b>HELLP:</b> hemólise + enzimas hepáticas ↑ + plaquetas ↓.</li>
+              </ul>
+            </div>
+
+            <div class="box">
+              <h4>Red flags</h4>
+              <ul>
+                <li><span class="tag bad">Cefaleia</span> intensa + escotomas</li>
+                <li><span class="tag bad">Dor epigástrica/HCD</span></li>
+                <li><span class="tag bad">Dispneia</span> / edema agudo pulmão</li>
+                <li><span class="tag warn">Oligúria</span> / creatinina subindo</li>
+                <li><span class="tag warn">Plaquetas caindo</span> / TGO-TGP subindo</li>
+              </ul>
+              <div class="callout">
+                <strong>Regra de sobrevivência:</strong> neurológico + HAS na gestante = gravidade até prova em contrário.
+              </div>
+            </div>
+          </div>
+
+          <details>
+            <summary>Sulfato de magnésio: conceito (sem engessar dose)</summary>
+            <div class="foot">
+              Base para prevenção/tratamento de convulsões em PE grave/eclâmpsia (esquemas variam por protocolo: Zuspan/Pritchard).
+            </div>
+          </details>
+        </section>
+
+        <!-- CAP 6 -->
+        <section id="cap6">
+          <h2>6) Diabetes na gestação (DMG e prévia)</h2>
+          <p class="sub">Rastreio + metas + controle: reduzir macrossomia, distócia e hipoglicemia neonatal.</p>
+
+          <div class="grid2">
+            <div class="box">
+              <h4>DMG — sequência mental</h4>
+              <ul>
+                <li>Rastrear na janela indicada</li>
+                <li>Iniciar com <b>dieta + atividade</b> e automonitorização</li>
+                <li>Se metas falham → <b>insulina</b> como padrão seguro</li>
+                <li>Vigiar crescimento fetal e via de parto conforme risco</li>
+              </ul>
+            </div>
+            <div class="box">
+              <h4>Complicações que caem</h4>
+              <ul>
+                <li><b>Maternas:</b> PE, infecções, parto operatório</li>
+                <li><b>Fetais/neonatais:</b> macrossomia, distócia de ombro, hipoglicemia neonatal</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- CAP 7 -->
+        <section id="cap7">
+          <h2>7) Infecções na gestação (TORCH/IST/ITU)</h2>
+          <p class="sub">Prova ama: sífilis, HIV, hepatite B, toxoplasmose e ITU.</p>
+
+          <div class="box">
+            <h4>Raciocínio padrão</h4>
+            <ul>
+              <li>1) diagnóstico correto (teste certo, tempo certo)</li>
+              <li>2) tratamento seguro para gestante</li>
+              <li>3) prevenção de transmissão vertical</li>
+              <li>4) seguimento e tratamento de parceiro quando indicado</li>
+            </ul>
+
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Infecção</th>
+                  <th>Ponto de prova</th>
+                  <th>Conduta (macro)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><b>Sífilis</b></td>
+                  <td>rastreio e tratamento mudam desfecho fetal</td>
+                  <td>penicilina + tratar parceiro + controle</td>
+                </tr>
+                <tr>
+                  <td><b>HIV</b></td>
+                  <td>carga viral define estratégia</td>
+                  <td>TARV + medidas intraparto/neonatal conforme protocolo</td>
+                </tr>
+                <tr>
+                  <td><b>Hepatite B</b></td>
+                  <td>imunoprofilaxia neonatal é chave</td>
+                  <td>condutas maternas + profilaxia RN</td>
+                </tr>
+                <tr>
+                  <td><b>Toxoplasmose</b></td>
+                  <td>avidez ajuda a datar infecção</td>
+                  <td>tratar conforme fase e evidência de infecção fetal</td>
+                </tr>
+                <tr>
+                  <td><b>ITU</b></td>
+                  <td>bacteriúria assintomática pode virar pielo</td>
+                  <td>tratar e reavaliar conforme urocultura</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- CAP 8 -->
+        <section id="cap8">
+          <h2>8) Rh e isoimunização</h2>
+          <p class="sub">Dominou Rh, tu passa em muita questão e evita erro feio na prática.</p>
+
+          <div class="grid2">
+            <div class="box">
+              <h4>Ideia central</h4>
+              <ul>
+                <li>Mãe <b>Rh−</b> pode sensibilizar se feto for Rh+</li>
+                <li>Anticorpos maternos podem causar doença hemolítica fetal/RN</li>
+              </ul>
+            </div>
+            <div class="box">
+              <h4>Ferramentas</h4>
+              <ul>
+                <li><b>Coombs indireto</b>: detecta anticorpos maternos</li>
+                <li><b>Anti-D</b>: prevenção em situações indicadas (conforme protocolo)</li>
+                <li>Eventos sensibilizantes: sangramento, procedimentos, trauma, parto</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- CAP 9 -->
+        <section id="cap9">
+          <h2>9) Trabalho de parto e parto normal (Diretriz MS)</h2>
+          <p class="sub">Boas práticas centradas na mulher: menos intervenção desnecessária, mais segurança e respeito.</p>
+
+          <div class="grid2">
+            <div class="box">
+              <h4>Pilares do trabalho de parto</h4>
+              <ul>
+                <li>Avaliar dinâmica uterina e progressão</li>
+                <li>Avaliar apresentação/posição/altura</li>
+                <li>Monitorar mãe e feto conforme necessidade</li>
+                <li>Consentimento e comunicação clara</li>
+              </ul>
+            </div>
+            <div class="box">
+              <h4>Boas práticas (macro)</h4>
+              <ul>
+                <li>Liberdade de posição e de acompanhante (quando permitido)</li>
+                <li>Alívio da dor e suporte contínuo</li>
+                <li>Evitar rotinas sem indicação (ex.: intervenções “automáticas”)</li>
+              </ul>
+              <div class="callout">
+                <strong>MS bate muito nisso:</strong> reduzir intervenções desnecessárias e focar no cuidado baseado em evidência.
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- CAP 10 -->
+        <section id="cap10">
+          <h2>10) Indução e uterotônicos (conceito + segurança)</h2>
+          <p class="sub">Aqui o protocolo local manda. O OrlandoBook te dá a lógica para não cair em pegadinha.</p>
+
+          <div class="box">
+            <h4>Princípios</h4>
+            <ul>
+              <li>Avaliar indicação e contraindicações</li>
+              <li>Colo favorável vs. desfavorável (maturação cervical pode ser necessária)</li>
+              <li>Monitorar hiperestimulação e BCF</li>
+            </ul>
+            <div class="callout">
+              <strong>Regra ouro:</strong> uterotônico é “potente” — sem monitorização, vira problema.
+            </div>
+          </div>
+        </section>
+
+        <!-- CAP 11 -->
+        <section id="cap11">
+          <h2>11) Emergências intraparto</h2>
+          <p class="sub">Obstetrícia em modo algoritmo: reconhecer, chamar ajuda, executar sequência.</p>
+
+          <div class="grid2">
+            <div class="box">
+              <h4>Distócia de ombro (macro)</h4>
+              <ul>
+                <li>Reconhecer rápido</li>
+                <li>Manobras sequenciais conforme treinamento do serviço</li>
+                <li>Evitar tração excessiva</li>
+              </ul>
+            </div>
+
+            <div class="box">
+              <h4>Prolapso de cordão / sofrimento fetal</h4>
+              <ul>
+                <li>É urgência: reduzir compressão e agilizar via de parto conforme cenário</li>
+                <li>Tempo e coordenação salvam vida</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- CAP 12 -->
+        <section id="cap12">
+          <h2>12) Hemorragia pós-parto (HPP) — 4 T’s + passos (FEBRASGO)</h2>
+          <p class="sub">Tema “vida real”. Memoriza: 4T’s. E age em passos.</p>
+
+          <div class="grid2">
+            <div class="box">
+              <h4>4 T’s</h4>
+              <ul>
+                <li><b>Tônus</b> (atonia) — comum</li>
+                <li><b>Tecido</b> (restos)</li>
+                <li><b>Trauma</b> (lacerações/hematomas/inversão)</li>
+                <li><b>Trombina</b> (coagulopatia)</li>
+              </ul>
+            </div>
+
+            <div class="box">
+              <h4>Passos (macro)</h4>
+              <ul>
+                <li>Chamar ajuda + acesso venoso + monitorização</li>
+                <li>Massagem uterina + uterotônicos conforme protocolo</li>
+                <li>Pesquisar trauma/tecido/coagulopatia</li>
+                <li>Reposição volêmica/hemocomponentes conforme choque</li>
+              </ul>
+            </div>
+          </div>
+
+          <details>
+            <summary>Pérola (FEBRASGO): tranexâmico entra cedo em muitos algoritmos</summary>
+            <div class="foot">
+              Em documentos da FEBRASGO, o ácido tranexâmico aparece como medida importante no manejo de HPP (dentro de protocolos).
+            </div>
+          </details>
+        </section>
+
+        <!-- CAP 13 -->
+        <section id="cap13">
+          <h2>13) Puerpério e amamentação</h2>
+          <p class="sub">O pós-parto é onde a vida acontece: infecção, DHG persistente, saúde mental, amamentação.</p>
+
+          <div class="grid2">
+            <div class="box">
+              <h4>Red flags no puerpério</h4>
+              <ul>
+                <li><span class="tag bad">Febre</span> e mal-estar importante</li>
+                <li><span class="tag bad">Sangramento</span> aumentado</li>
+                <li><span class="tag warn">Dor</span> intensa / sinais de trombose</li>
+                <li><span class="tag warn">Cefaleia</span> + PA alta</li>
+                <li><span class="tag warn">Humor</span> deprimido/ideação → atenção</li>
+              </ul>
+            </div>
+            <div class="box">
+              <h4>Amamentação (problemas comuns)</h4>
+              <ul>
+                <li>Pega incorreta → fissura/dor</li>
+                <li>Ingurgitamento</li>
+                <li>Mastite: avaliar febre, dor localizada, conduta conforme protocolo</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- CAP 14 -->
+        <section id="cap14">
+          <h2>14) Medicamentos na gestação (macro “pode/evita”)</h2>
+          <p class="sub">Sem heroísmo: usar o necessário, evitar teratógenos e “automedicação”.</p>
+
+          <div class="box">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Categoria</th>
+                  <th>Geralmente preferido (depende do caso)</th>
+                  <th>Evitar / cautela</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><b>Analgesia</b></td>
+                  <td>Paracetamol costuma ser primeira linha</td>
+                  <td>AINEs com cautela, especialmente no final (conforme diretriz)</td>
+                </tr>
+                <tr>
+                  <td><b>HAS</b></td>
+                  <td>Alguns anti-hipertensivos são usados na gestação</td>
+                  <td><b>IECA/BRA</b> geralmente evitados</td>
+                </tr>
+                <tr>
+                  <td><b>Antibióticos</b></td>
+                  <td>Beta-lactâmicos são comuns em muitos cenários</td>
+                  <td>Tetraciclinas costumam ser evitadas</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div class="callout">
+              <strong>Se tu quiser “modo prova”: </strong>
+              eu crio uma tabela só de antibióticos e anti-hipertensivos “mais cobrados”, alinhado ao protocolo que tu tá usando.
+            </div>
+          </div>
+        </section>
+
+        <!-- CAP 15 -->
+        <section id="cap15">
+          <h2>15) Checklist prova/plantão</h2>
+          <p class="sub">Revisão em 10 minutos pra não vacilar nos temas campeões.</p>
+
+          <div class="grid2">
+            <div class="box">
+              <h4>Top 10 assuntos campeões</h4>
+              <ol style="margin:8px 0 0 18px">
+                <li>DHG: pré-eclâmpsia/HELLP/eclâmpsia</li>
+                <li>Rh: Coombs/anti-D</li>
+                <li>DMG: rastreio e manejo</li>
+                <li>HPP: 4T’s e algoritmo</li>
+                <li>Trabalho de parto: progressão e boas práticas</li>
+                <li>Indução: conceito + segurança</li>
+                <li>IST/infecções: sífilis/HIV/toxo/ITU</li>
+                <li>Vacinas: vivas vs inativadas</li>
+                <li>Movimentos fetais diminuídos</li>
+                <li>Puerpério: febre/sangramento/PA/saúde mental</li>
+              </ol>
+            </div>
+
+            <div class="box">
+              <h4>3 frases que salvam</h4>
+              <ul>
+                <li><b>Neurológico + HAS = gravidade</b></li>
+                <li><b>HPP = 4T’s</b> (e agir em passos)</li>
+                <li><b>Datação precoce manda</b> (evita erro)</li>
+              </ul>
+              <div class="callout">
+                <strong>Próximo upgrade (se tu quiser):</strong>
+                eu boto “mini-simulado” no final de cada capítulo (questões inteligentes, com explicação ensinando).
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- FONTES -->
+        <section id="fontes">
+          <h2>Fontes oficiais usadas (pra tu confiar e também citar)</h2>
+          <p class="sub">Links diretos (BVSMS / gov.br / FEBRASGO). Tudo aqui é “ponto de ancoragem” do OrlandoBook.</p>
+
+          <div class="box">
+            <h4>Ministério da Saúde (MS)</h4>
+            <ul>
+              <li><b>Atenção ao pré-natal de baixo risco (Cadernos AB 32)</b> — BVSMS:
+                <a href="https://bvsms.saude.gov.br/bvs/publicacoes/cadernos_atencao_basica_32_prenatal.pdf" target="_blank" rel="noopener">abrir PDF</a>
+              </li>
+              <li><b>Diretriz Nacional de Assistência ao Parto Normal</b> — gov.br (atualizado em 20/01/2025):
+                <a href="https://www.gov.br/saude/pt-br/assuntos/pcdt/a/assistencia-ao-parto-normal-diretriz-nacional/view" target="_blank" rel="noopener">abrir página</a>
+              </li>
+              <li><b>Caderneta da Gestante — 8ª edição revisada (2024)</b> — BVSMS:
+                <a href="https://bvsms.saude.gov.br/bvs/publicacoes/caderneta_gestante_8ed_rev.pdf" target="_blank" rel="noopener">abrir PDF</a>
+              </li>
+              <li><b>Guia Pré-Natal do Parceiro (2ª edição)</b> — BVSMS:
+                <a href="https://bvsms.saude.gov.br/bvs/publicacoes/guia_pre_natal_profissionais_saude%E2%80%932ed.pdf" target="_blank" rel="noopener">abrir PDF</a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="box" style="margin-top:12px">
+            <h4>FEBRASGO</h4>
+            <ul>
+              <li><b>Position Statement — Hemorragia pós-parto (HPP)</b>:
+                <a href="https://www.febrasgo.org.br/images/pec/FPS---Edicao-Especial-2024_1_Portugues-1.pdf" target="_blank" rel="noopener">abrir PDF</a>
+              </li>
+              <li><b>Página de comissões e documentos de Obstetrícia (FEBRASGO)</b>:
+                <a href="https://www.febrasgo.org.br/pt/institucional/comissoes/obstetricia-pg" target="_blank" rel="noopener">abrir página</a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="foot">
+            Dica: se tu for escrever artigo/referência, dá pra citar essas fontes em estilo Vancouver/ABNT.
+          </div>
+        </section>
+
       </div>
-    </nav>
-
-    <div>
-      <!-- CAP 1 -->
-      <section id="cap1">
-        <h2>1) Fundamentos e datas</h2>
-        <p class="sub">O básico que destrava metade da obstetrícia: idade gestacional, DPP, sinais de gravidade e rotina.</p>
-
-        <div class="grid2">
-          <div class="box">
-            <h4>Idade gestacional (IG) e DPP</h4>
-            <ul>
-              <li><b>Gestação a termo:</b> ~37 a 41s+6d (conceito geral; pode variar conforme guia)</li>
-              <li><b>Datação ideal:</b> USG do 1º trimestre (CCN/CRL) é a mais precisa.</li>
-              <li><b>Regra de Naegele (DPP):</b> DUM + 7 dias − 3 meses (+ 1 ano) (ajuste conforme calendário)</li>
-              <li><b>Se DUM incerta:</b> priorize USG precoce.</li>
-            </ul>
-            <div class="callout">
-              <strong>Armadilha de prova</strong>
-              DUM “redondinha” nem sempre é confiável (ciclos irregulares, anticoncepção recente, sangramento de nidação confundindo).
-            </div>
-          </div>
-
-          <div class="box">
-            <h4>Sinais de alarme (sempre perguntar)</h4>
-            <ul>
-              <li><span class="tag bad">Sangramento</span> vaginal importante</li>
-              <li><span class="tag bad">Dor</span> abdominal intensa/contínua</li>
-              <li><span class="tag bad">Cefaleia</span> forte + escotomas/fosfenos</li>
-              <li><span class="tag bad">Dispneia</span> / dor torácica</li>
-              <li><span class="tag warn">Edema</span> abrupto + ganho rápido de peso</li>
-              <li><span class="tag warn">↓ movimentos fetais</span></li>
-              <li><span class="tag warn">Febre</span> / disúria / dor lombar</li>
-              <li><span class="tag warn">Rotura</span> de membranas (perda de líquido)</li>
-            </ul>
-            <p class="foot">Qualquer um desses → reavaliar risco e encaminhar/avaliar urgência conforme quadro.</p>
-          </div>
-        </div>
-
-        <details>
-          <summary>Consultas de pré-natal: “ritmo” típico</summary>
-          <div class="muted" style="margin-top:8px">
-            Em geral: consultas mais espaçadas no início e mais frequentes no final. O “como” exato depende do protocolo local,
-            mas a lógica é: <b>início = datar e rastrear</b>, <b>meio = acompanhar crescimento/risco</b>, <b>final = prevenir complicações e planejar o parto</b>.
-          </div>
-        </details>
-      </section>
-
-      <!-- CAP 2 -->
-      <section id="cap2">
-        <h2>2) Primeira consulta do pré-natal (roteiro prático)</h2>
-        <p class="sub">A consulta que define o jogo: classifica risco, fecha rastreios e organiza o plano do acompanhamento.</p>
-
-        <div class="grid2">
-          <div class="box">
-            <h4>Anamnese obstétrica e clínica</h4>
-            <ul>
-              <li>Gesta/para/aborto, partos anteriores (normal/cesárea), complicações (HPP, PE, prematuridade)</li>
-              <li>Comorbidades: HAS, DM, renal, autoimunes, trombofilias, cardiopatias</li>
-              <li>Medicações em uso (teratogênicos!), alergias</li>
-              <li>História familiar (malformações, DM, HAS)</li>
-              <li>Aspectos sociais: suporte, violência, álcool/drogas, condições de moradia</li>
-            </ul>
-          </div>
-
-          <div class="box">
-            <h4>Exame físico essencial</h4>
-            <ul>
-              <li><b>PA</b> (técnica correta) + peso/IMC</li>
-              <li>Sinais de anemia, tireoide, edema</li>
-              <li>Ausculta, mamas, abdome</li>
-              <li>Exame ginecológico quando indicado</li>
-              <li>Altura uterina e BCF quando aplicável</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="box" style="margin-top:12px">
-          <h4>Exames iniciais (pacote “clássico”)</h4>
-          <table class="table">
-            <thead>
-              <tr>
-                <th>Grupo</th>
-                <th>Exames</th>
-                <th>Por quê</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><span class="tag ok">Sangue</span></td>
-                <td>Hemograma, tipagem ABO/Rh, Coombs indireto (se Rh−), glicemia (triagem), sorologias conforme protocolo</td>
-                <td>anemia, risco isoimunização, rastrear DM/infecções</td>
-              </tr>
-              <tr>
-                <td><span class="tag ok">Urina</span></td>
-                <td>EAS + urocultura (especialmente no início)</td>
-                <td>bacteriúria assintomática e ITU</td>
-              </tr>
-              <tr>
-                <td><span class="tag ok">Infecções</span></td>
-                <td>Sífilis, HIV, hepatite B (± C), rubéola/toxo conforme protocolo local</td>
-                <td>prevenir transmissão vertical e complicações fetais</td>
-              </tr>
-              <tr>
-                <td><span class="tag ok">Imagem</span></td>
-                <td>USG 1º tri (datação/viabilidade) quando disponível</td>
-                <td>melhor datação + rastreios iniciais</td>
-              </tr>
-            </tbody>
-          </table>
-
-          <div class="callout">
-            <strong>Chave de ouro</strong>
-            Primeira consulta boa é a que sai com: <b>IG fechada</b>, <b>risco classificado</b>, <b>exames solicitados</b> e <b>plano escrito</b>.
-          </div>
-        </div>
-      </section>
-
-      <!-- CAP 3 -->
-      <section id="cap3">
-        <h2>3) Suplementação e vacinas</h2>
-        <p class="sub">Aqui é onde tu “compra” prevenção barata: anemia, defeito do tubo neural, infecções evitáveis.</p>
-
-        <div class="grid2">
-          <div class="box">
-            <h4>Suplementos (visão prática)</h4>
-            <ul>
-              <li><b>Ácido fólico:</b> ideal iniciar antes da concepção e manter no 1º trimestre (dose varia por risco).</li>
-              <li><b>Ferro:</b> profilaxia/tratamento conforme Hb e ferritina; tolerância GI é o “vilão”.</li>
-              <li><b>Cálcio:</b> pode ser indicado em grupos de risco para pré-eclâmpsia, conforme diretriz.</li>
-              <li><b>Vitamina D:</b> considerar conforme risco/deficiência, especialmente se baixa exposição solar.</li>
-              <li><b>Iodo:</b> geralmente via sal iodado/alimentação; atenção em distúrbios tireoidianos.</li>
-            </ul>
-            <p class="foot">Doses exatas e quando usar (alto risco) dependem do protocolo do teu serviço.</p>
-          </div>
-
-          <div class="box">
-            <h4>Vacinas (lógica geral)</h4>
-            <ul>
-              <li><b>Inativadas</b> (geralmente podem): influenza, dT/dTpa, hepatite B (conforme status).</li>
-              <li><b>Vivas atenuadas</b> (em geral evitar na gestação): ex. tríplice viral, varicela.</li>
-              <li><b>Pós-parto</b>: ótima janela para atualizar o que ficou pendente.</li>
-            </ul>
-            <div class="callout">
-              <strong>Pergunta clássica</strong>
-              “Por que evitar vacina viva?” → risco teórico de infecção fetal (embora eventos sejam raros). Em prova: <b>evitar</b>.
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- CAP 4 -->
-      <section id="cap4">
-        <h2>4) Rastreamentos e ultrassons por trimestre</h2>
-        <p class="sub">O “calendário” que organiza o pré-natal: datação, morfológico, DMG, GBS e vigilância do final.</p>
-
-        <div class="box">
-          <h4>Resumo por janelas</h4>
-          <table class="table">
-            <thead>
-              <tr>
-                <th>Janela</th>
-                <th>Objetivo</th>
-                <th>O que costuma entrar</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><b>1º trimestre</b></td>
-                <td>Confirmar viabilidade + datar</td>
-                <td>USG precoce (ideal), rastreios iniciais e sorologias</td>
-              </tr>
-              <tr>
-                <td><b>2º trimestre</b></td>
-                <td>Rastrear malformações + crescimento</td>
-                <td>USG morfológico, avaliação do colo se indicado</td>
-              </tr>
-              <tr>
-                <td><b>24–28s</b> (varia)</td>
-                <td>Rastreio de DMG</td>
-                <td>Teste oral de tolerância conforme protocolo</td>
-              </tr>
-              <tr>
-                <td><b>Final da gestação</b></td>
-                <td>Planejar parto + vigilância</td>
-                <td>GBS (strepto B) em muitos protocolos, BCF, AU, movimentos fetais, PA/edema, reavaliação de risco</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <details>
-          <summary>Pérolas: como a prova gosta de confundir</summary>
-          <ul class="muted">
-            <li>“USG precoce” vale ouro: reduz erro na IG e muda decisão de indução/termo.</li>
-            <li>“Movimentos fetais diminuíram” → sempre é sério até prova em contrário.</li>
-            <li>GBS: em muitos lugares faz rastreio no fim e faz profilaxia intraparto se positivo (protocolos variam).</li>
-          </ul>
-        </details>
-      </section>
-
-      <!-- CAP 5 -->
-      <section id="cap5">
-        <h2>5) Doenças hipertensivas da gestação (DHG)</h2>
-        <p class="sub">Tema campeão de prova e de plantão. O segredo é reconhecer gravidade e não “subestimar” sintoma neurológico.</p>
-
-        <div class="grid2">
-          <div class="box">
-            <h4>Conceitos (bem didático)</h4>
-            <ul>
-              <li><b>HAS gestacional:</b> hipertensão após 20s sem critérios de pré-eclâmpsia.</li>
-              <li><b>Pré-eclâmpsia:</b> HAS após 20s + disfunção orgânica e/ou proteinúria (critérios variam por diretriz).</li>
-              <li><b>Gravidade:</b> sinais neurológicos, PA muito elevada persistente, alterações hepáticas/renais, plaquetopenia, edema agudo de pulmão, etc.</li>
-              <li><b>Eclâmpsia:</b> convulsão em contexto de pré-eclâmpsia.</li>
-              <li><b>HELLP:</b> hemólise, enzimas hepáticas elevadas, plaquetopenia.</li>
-            </ul>
-          </div>
-
-          <div class="box">
-            <h4>“Red flags” (memorização)</h4>
-            <ul>
-              <li><span class="tag bad">Cefaleia</span> intensa + escotomas/fosfenos</li>
-              <li><span class="tag bad">Dor epigástrica</span> / hipocôndrio direito</li>
-              <li><span class="tag bad">Dispneia</span> / edema pulmonar</li>
-              <li><span class="tag warn">Oligúria</span> / creatinina subindo</li>
-              <li><span class="tag warn">Plaquetas caindo</span> / TGO-TGP subindo</li>
-            </ul>
-            <div class="callout">
-              <strong>Regra de sobrevivência</strong>
-              Neurológico em gestante hipertensa = <b>não é frescura</b>. É gravidade até dizer o contrário.
-            </div>
-          </div>
-        </div>
-
-        <details>
-          <summary>Magnésio: onde entra?</summary>
-          <div class="muted" style="margin-top:8px">
-            Sulfato de magnésio é a base para prevenção/tratamento de convulsões na pré-eclâmpsia grave/eclâmpsia.
-            Esquemas variam (Pritchard/Zuspan). Em prova, o conceito é: <b>controla convulsão</b> e reduz risco de recorrência.
-          </div>
-        </details>
-      </section>
-
-      <!-- CAP 6 -->
-      <section id="cap6">
-        <h2>6) Diabetes na gestação (DMG e prévia)</h2>
-        <p class="sub">Rastrear, confirmar, tratar e evitar “hiperglicemia silenciosa” que explode em macrosomia/hipoglicemia neonatal.</p>
-
-        <div class="grid2">
-          <div class="box">
-            <h4>DMG — ideia central</h4>
-            <ul>
-              <li>Rastreio em janela padrão (com variações por protocolo)</li>
-              <li>Tratamento começa com <b>dieta + exercício</b> + monitorização glicêmica</li>
-              <li>Se metas não atingidas → <b>insulina</b> é o padrão mais seguro</li>
-              <li>Acompanhar crescimento fetal e risco de macrossomia</li>
-            </ul>
-          </div>
-
-          <div class="box">
-            <h4>Complicações que caem em prova</h4>
-            <ul>
-              <li><b>Maternas:</b> pré-eclâmpsia, infecções, parto operatório</li>
-              <li><b>Fetais/neonatais:</b> macrossomia, distócia de ombro, hipoglicemia neonatal, icterícia</li>
-              <li><b>Longo prazo:</b> risco metabólico aumentado (mãe e filho)</li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      <!-- CAP 7 -->
-      <section id="cap7">
-        <h2>7) Infecções na gestação (TORCH/STORCH, ITU e “as que mais caem”)</h2>
-        <p class="sub">Infecção em gestante = duas pessoas na equação. Prova ama sífilis, toxo, HIV, hepatite B e ITU.</p>
-
-        <div class="box">
-          <h4>Pacote de raciocínio</h4>
-          <ul>
-            <li>1) <b>Diagnosticar</b> com teste certo (e no tempo certo)</li>
-            <li>2) <b>Tratar</b> adequadamente (medicação segura na gestação)</li>
-            <li>3) <b>Prevenir transmissão vertical</b> (condutas específicas)</li>
-            <li>4) <b>Repetir/confirmar</b> quando protocolo pede</li>
-          </ul>
-
-          <table class="table">
-            <thead>
-              <tr>
-                <th>Infecção</th>
-                <th>Ponto de prova</th>
-                <th>Conduta (macro)</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><b>Sífilis</b></td>
-                <td>rastreamento no pré-natal; risco fetal alto se não tratar</td>
-                <td>tratamento com penicilina + tratar parceiro + controle</td>
-              </tr>
-              <tr>
-                <td><b>HIV</b></td>
-                <td>carga viral define estratégia de transmissão vertical</td>
-                <td>TARV + medidas intraparto/neonatal conforme protocolo</td>
-              </tr>
-              <tr>
-                <td><b>Hepatite B</b></td>
-                <td>profilaxia neonatal é crucial</td>
-                <td>imunoprofilaxia + seguimento</td>
-              </tr>
-              <tr>
-                <td><b>Toxoplasmose</b></td>
-                <td>avidez ajuda a datar infecção; impacto fetal depende do período</td>
-                <td>tratamento conforme fase/infecção fetal; prevenção alimentar</td>
-              </tr>
-              <tr>
-                <td><b>ITU/bacteriúria</b></td>
-                <td>bacteriúria assintomática pode evoluir pra pielo</td>
-                <td>tratar conforme urocultura + reavaliar</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <details>
-          <summary>Prevenção toxoplasmose (prático)</summary>
-          <ul class="muted">
-            <li>Carne bem cozida, higiene de frutas/verduras</li>
-            <li>Cuidado com fezes de gato/areia (luvas, higiene)</li>
-            <li>Água tratada (atenção no interior)</li>
-          </ul>
-        </details>
-      </section>
-
-      <!-- CAP 8 -->
-      <section id="cap8">
-        <h2>8) Rh e isoimunização</h2>
-        <p class="sub">Se tu dominar isso, tu mata um bloco inteiro de obstetrícia e ainda evita erro feio na vida real.</p>
-
-        <div class="grid2">
-          <div class="box">
-            <h4>Conceito simples</h4>
-            <ul>
-              <li>Mãe <b>Rh negativo</b> pode sensibilizar se o feto for Rh positivo.</li>
-              <li>Sensibilização → produção de anticorpos maternos contra hemácias fetais.</li>
-              <li>Isso pode causar <b>doença hemolítica do feto/recém-nascido</b>.</li>
-            </ul>
-          </div>
-          <div class="box">
-            <h4>Ferramentas-chave</h4>
-            <ul>
-              <li><b>Coombs indireto:</b> detecta anticorpos maternos anti-hemácias.</li>
-              <li><b>Imunoglobulina anti-D:</b> prevenção da sensibilização em situações indicadas pelo protocolo.</li>
-              <li>Eventos sensibilizantes: sangramentos, procedimentos, trauma, parto, etc.</li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      <!-- CAP 9 -->
-      <section id="cap9">
-        <h2>9) Trabalho de parto e parto</h2>
-        <p class="sub">Fisiologia + clínica + partograma + assistência segura. Aqui a obstetrícia vira “mecânica fina”.</p>
-
-        <div class="grid2">
-          <div class="box">
-            <h4>Trabalho de parto — pilares</h4>
-            <ul>
-              <li><b>Contrações</b> regulares + <b>apagamento/dilatação</b></li>
-              <li>Avaliar <b>apresentação</b>, <b>posição</b>, <b>altura</b></li>
-              <li>Monitorar mãe (PA, dor, sangramento) e feto (BCF)</li>
-              <li><b>Partograma</b> quando indicado no protocolo</li>
-            </ul>
-          </div>
-
-          <div class="box">
-            <h4>Analgesia e conforto</h4>
-            <ul>
-              <li>Acolhimento, posição, deambulação quando possível</li>
-              <li>Analgesia farmacológica conforme serviço</li>
-              <li>Analgesia neuraxial (peridural/raqui) quando disponível</li>
-            </ul>
-            <div class="callout">
-              <strong>Prova adora</strong>
-              “Sofrimento fetal” não é “achismo”: precisa de critérios e contexto (e ação).
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- CAP 10 -->
-      <section id="cap10">
-        <h2>10) Indução, ocitocina e misoprostol (visão segura)</h2>
-        <p class="sub">Tópico delicado: aqui o protocolo local manda. Eu deixei o raciocínio + esquemas gerais mais cobrados.</p>
-
-        <div class="box">
-          <h4>Princípios</h4>
-          <ul>
-            <li>Indução = iniciar trabalho de parto por indicação materna/fetal/obstétrica.</li>
-            <li>Avaliar colo (favorável vs. desfavorável) e contraindicações.</li>
-            <li>Monitorar hiperestimulação uterina e BCF.</li>
-          </ul>
-          <div class="callout">
-            <strong>Segurança acima de tudo</strong>
-            Esquemas de ocitocina e misoprostol variam MUITO. Em plantão/prova, responda com o <b>conceito</b> e cite “conforme protocolo”.
-          </div>
-        </div>
-
-        <details>
-          <summary>Ocitocina (conceito de prova)</summary>
-          <div class="muted" style="margin-top:8px">
-            Ocitocina é titulada progressivamente para atingir dinâmica uterina adequada, com monitorização materno-fetal.
-            Risco: taquissistolia/hiperestimulação → sofrimento fetal.
-          </div>
-        </details>
-
-        <details>
-          <summary>Misoprostol (conceito de prova)</summary>
-          <div class="muted" style="margin-top:8px">
-            Usado para maturação cervical/indução em cenários específicos. Evitar em situações com contraindicação (ex.: cicatriz uterina dependendo do protocolo).
-          </div>
-        </details>
-      </section>
-
-      <!-- CAP 11 -->
-      <section id="cap11">
-        <h2>11) Distócias e emergências intraparto</h2>
-        <p class="sub">O que separa “obstetra de verdade” do caos: reconhecer e agir em sequência.</p>
-
-        <div class="grid2">
-          <div class="box">
-            <h4>Distócia de ombro (macro)</h4>
-            <ul>
-              <li>Reconhecer rapidamente</li>
-              <li>Manobras sequenciais (conforme treinamento do serviço)</li>
-              <li>Evitar tração excessiva</li>
-            </ul>
-          </div>
-
-          <div class="box">
-            <h4>Prolapso de cordão / sofrimento fetal</h4>
-            <ul>
-              <li>É urgência real: reduzir compressão e agilizar via de parto conforme cenário</li>
-              <li>Prioridade: oxigenação fetal e tempo</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="callout">
-          <strong>Visão “de guerra”</strong>
-          Emergência obstétrica é “algoritmo”: <b>reconheceu → chamou ajuda → sequência → reavalia → decide via de parto</b>.
-        </div>
-      </section>
-
-      <!-- CAP 12 -->
-      <section id="cap12">
-        <h2>12) Hemorragia pós-parto (HPP)</h2>
-        <p class="sub">Assunto de prova e um dos mais perigosos na prática. Memoriza: <span class="kbd">4 T’s</span>.</p>
-
-        <div class="grid2">
-          <div class="box">
-            <h4>4 T’s</h4>
-            <ul>
-              <li><b>Tônus</b> (atonia uterina) — o mais comum</li>
-              <li><b>Tecido</b> (restos placentários)</li>
-              <li><b>Trauma</b> (lacerações, hematomas, inversão)</li>
-              <li><b>Trombina</b> (coagulopatias)</li>
-            </ul>
-          </div>
-
-          <div class="box">
-            <h4>Conduta em passos (macro)</h4>
-            <ul>
-              <li>Chamar ajuda + acesso venoso calibroso + monitorização</li>
-              <li>Massagem uterina, uterotônicos conforme protocolo</li>
-              <li>Pesquisar lacerações, restos, coagulopatia</li>
-              <li>Reposição volêmica/hemocomponentes se necessário</li>
-            </ul>
-          </div>
-        </div>
-
-        <details>
-          <summary>Uterotônicos (lembrança)</summary>
-          <div class="muted" style="margin-top:8px">
-            Ocitocina é base em muitos protocolos. Ergometrina e misoprostol entram conforme cenário/contraindicações.
-            Tranexâmico pode ser considerado em hemorragia (protocolos variam).
-          </div>
-        </details>
-      </section>
-
-      <!-- CAP 13 -->
-      <section id="cap13">
-        <h2>13) Puerpério, amamentação e anticoncepção</h2>
-        <p class="sub">A fase que muita gente negligencia — e onde mora infecção, depressão pós-parto e planejamento reprodutivo.</p>
-
-        <div class="grid2">
-          <div class="box">
-            <h4>Cuidados puerperais</h4>
-            <ul>
-              <li>Sangramento (lóquios), dor, febre, PA (especialmente se DHG)</li>
-              <li>Saúde mental: rastrear sinais de depressão pós-parto</li>
-              <li>Cicatrização (laceração/cesárea), trombose (risco)</li>
-            </ul>
-          </div>
-
-          <div class="box">
-            <h4>Amamentação (problemas comuns)</h4>
-            <ul>
-              <li>Pega incorreta → fissura/dor</li>
-              <li>Ingurgitamento</li>
-              <li>Mastite (avaliar febre, dor localizada, conduta conforme protocolo)</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="box" style="margin-top:12px">
-          <h4>Anticoncepção no pós-parto (macro)</h4>
-          <ul>
-            <li>Métodos variam por amamentação e tempo pós-parto.</li>
-            <li>Progestagênio isolado e DIU frequentemente são opções discutidas (conforme protocolo).</li>
-            <li>Evitar estrogênio muito cedo no pós-parto em muitos casos por risco trombótico (conforme guia).</li>
-          </ul>
-        </div>
-      </section>
-
-      <!-- CAP 14 -->
-      <section id="cap14">
-        <h2>14) Medicamentos na gestação (o que mais aparece)</h2>
-        <p class="sub">A regra é: usar o necessário, do jeito certo, evitando teratogênicos e “achismos”.</p>
-
-        <div class="box">
-          <h4>Mapa rápido</h4>
-          <table class="table">
-            <thead>
-              <tr>
-                <th>Categoria</th>
-                <th>Geralmente OK (depende do caso)</th>
-                <th>Evitar / cautela</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><b>Analgesia</b></td>
-                <td>Paracetamol é o “clássico”</td>
-                <td>AINEs com cautela (sobretudo no final da gestação)</td>
-              </tr>
-              <tr>
-                <td><b>Antibióticos</b></td>
-                <td>Alguns beta-lactâmicos são comuns</td>
-                <td>Tetraciclinas (evitar), outros conforme risco/benefício</td>
-              </tr>
-              <tr>
-                <td><b>Antieméticos</b></td>
-                <td>Opções existem conforme protocolo</td>
-                <td>Evitar automedicação</td>
-              </tr>
-              <tr>
-                <td><b>HAS</b></td>
-                <td>Alguns anti-hipertensivos são usados</td>
-                <td>IECA/BRA geralmente evitados na gestação</td>
-              </tr>
-            </tbody>
-          </table>
-
-          <div class="callout">
-            <strong>Armadilha clássica</strong>
-            “Ah, eu uso IECA porque sempre usei” → em gestação isso costuma ser problema. Em prova: <b>evitar</b>.
-          </div>
-        </div>
-
-        <details>
-          <summary>Anti-D, magnésio, uterotônicos — por que eu não botei dose fechada aqui?</summary>
-          <div class="muted" style="margin-top:8px">
-            Porque esses itens são altamente protocolodependentes e contexto-dependentes (peso, via, esquema do serviço, contraindicações).
-            Se tu quiser, eu crio um capítulo só de <b>doses</b> baseado no protocolo que tu usa (Ministério/serviço local/ACOG),
-            mas aí a gente escolhe um “padrão” e deixa ele como referência oficial no teu material.
-          </div>
-        </details>
-      </section>
-
-      <!-- CAP 15 -->
-      <section id="cap15">
-        <h2>15) Checklist “prova e plantão”</h2>
-        <p class="sub">Aqui é o “modo turbo”: o que tu revisa em 15 minutos antes de uma prova/plantão.</p>
-
-        <div class="grid2">
-          <div class="box">
-            <h4>Top 10 coisas que mais caem</h4>
-            <ol style="margin:8px 0 0 18px">
-              <li>DHG: pré-eclâmpsia/eclâmpsia/HELLP (gravidade)</li>
-              <li>Rh e anti-D / Coombs indireto</li>
-              <li>DMG: rastreio e tratamento (conceito)</li>
-              <li>HPP: 4 T’s e passos</li>
-              <li>Trabalho de parto: fases, partograma, dinâmica</li>
-              <li>Indução: avaliação do colo e monitorização</li>
-              <li>Infecções (sífilis, HIV, toxo, ITU)</li>
-              <li>Vacinas: vivas vs. inativadas</li>
-              <li>↓ movimentos fetais: importância</li>
-              <li>Amamentação + puerpério + anticoncepção</li>
-            </ol>
-          </div>
-
-          <div class="box">
-            <h4>3 frases pra grudar na mente</h4>
-            <ul>
-              <li><b>Neurológico + HAS = gravidade</b></li>
-              <li><b>HPP = 4 T’s</b> (e agir em sequência)</li>
-              <li><b>Datação precoce manda</b> (muda decisão e evita erro)</li>
-            </ul>
-            <div class="callout">
-              <strong>Modo “visionário”</strong>
-              Tu pode pegar esse HTML e ir transformando em um <b>Centro de Provas</b> com questões inteligentes por capítulo
-              (do jeito que tu gosta: alternativas plausíveis e explicação ensinando).
-            </div>
-          </div>
-        </div>
-
-        <p class="foot">
-          Quer que eu evolua isso pra um “livro master” mesmo? Eu posso: adicionar <b>capítulos de: prematuridade, RCIU, gemelar, placenta prévia/DPP,
-          ruptura prematura de membranas, sofrimento fetal/CTG, sepse obstétrica, tromboembolismo, RNs (Apgar e cuidados iniciais)</b> e
-          ainda botar <b>mini-provas por capítulo</b>.
-        </p>
-      </section>
     </div>
   </div>
 </main>
 
 <script>
-  // Pesquisa simples: destaca ocorrências e rola para a primeira.
+  // Pesquisa com destaque (mark)
   const input = document.getElementById('q');
   const btnClear = document.getElementById('btnClear');
 
@@ -1037,11 +996,10 @@
         if(!node.nodeValue) return NodeFilter.FILTER_REJECT;
         const t = node.nodeValue;
         if(t.trim().length < 2) return NodeFilter.FILTER_REJECT;
-        const parent = node.parentElement;
-        if(!parent) return NodeFilter.FILTER_REJECT;
-        const tag = parent.tagName.toLowerCase();
+        const p = node.parentElement;
+        if(!p) return NodeFilter.FILTER_REJECT;
+        const tag = p.tagName.toLowerCase();
         if(['script','style','input','textarea','button','mark'].includes(tag)) return NodeFilter.FILTER_REJECT;
-        if(parent.closest('nav')) return NodeFilter.FILTER_ACCEPT;
         return NodeFilter.FILTER_ACCEPT;
       }
     });
@@ -1049,7 +1007,8 @@
     const nodes = [];
     while(walker.nextNode()) nodes.push(walker.currentNode);
 
-    const re = new RegExp(term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi');
+    const safe = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const re = new RegExp(safe, 'gi');
     let firstMark = null;
 
     nodes.forEach(node=>{
@@ -1066,15 +1025,10 @@
 
         const mark = document.createElement('mark');
         mark.setAttribute('data-hl','1');
-        mark.style.background = 'rgba(74,163,255,.25)';
-        mark.style.border = '1px solid rgba(74,163,255,.35)';
-        mark.style.borderRadius = '8px';
-        mark.style.padding = '0 3px';
-        mark.style.color = 'inherit';
         mark.textContent = m[0];
         frag.appendChild(mark);
-        if(!firstMark) firstMark = mark;
 
+        if(!firstMark) firstMark = mark;
         last = m.index + m[0].length;
       }
       const after = txt.slice(last);
